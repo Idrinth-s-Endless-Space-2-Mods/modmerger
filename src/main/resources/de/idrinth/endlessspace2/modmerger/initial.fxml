@@ -16,12 +16,19 @@
             <children>
                 <HBox spacing="20.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label text="Endless Space 2 Folder:"/>
-                        <TextField fx:id="endlessSpaceFolder"/>
-                        <Button text="Start" onAction="#start"/>
+                      <VBox>
+                        <Label text="Steam Folder:"/>
+                        <TextField fx:id="steamFolder"/>
+                      </VBox>
+                      <VBox>
+                        <Label text="Mods to Merge(IDs comma separated)"/>
+                        <TextField fx:id="mods"/>
+                      </VBox>
+                      <VBox>
+                        <Button text="Merge" onAction="#start"/>
+                      </VBox>
                     </children>
                 </HBox>
-                <TextArea VBox.vgrow="ALWAYS" AnchorPane.bottomAnchor="0.0" maxHeight="Infinity" maxWidth="Infinity" editable="false" fx:id="output"/>
             </children>
         </VBox>
     </children>

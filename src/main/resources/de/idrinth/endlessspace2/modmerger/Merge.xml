@@ -1,86 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:noNamespaceSchemaLocation="../../../Public/Schemas/Amplitude.Unity.Runtime.RuntimeModule.xsd">
+<Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:noNamespaceSchemaLocation="../../../source/Schemas/Amplitude.Unity.Runtime.RuntimeModule.xsd">
     <RuntimeModule Name="Endless Space 2" Type="Standalone">
         <Title>Endless Space 2</Title>
         <Description>Default module. Could be localized...</Description>
         <Plugins>
-
-            <!-- AI -->
-
-            <AIPlugin Configuration="Release">
-                <AssemblyPath>Public/AI/Release/Amplitude.AI.Core.dll</AssemblyPath>
-            </AIPlugin>
-
-            <AIPlugin Configuration="Debug">
-                <AssemblyPath>Public/AI/Debug/Amplitude.AI.Core.dll</AssemblyPath>
-            </AIPlugin>
-
             <!-- REGISTRIES -->
 
-            <RegistryPlugin>
-                <FilePath>Public/Registry.xml</FilePath>
-            </RegistryPlugin>
+            <!--<RegistryPlugin>
+                <FilePath>source/Registry.xml</FilePath>
+            </RegistryPlugin>-->
 
             <!-- GALAXY GENERATOR -->
 
             <DatabasePlugin DataType="GalaxyGeneratorWeightTableDefinition, Assembly-CSharp">
-                <FilePath>Public/GalaxyGenerator/WeightTableDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/WeightTableDefinitions[*].xml</FilePath>
+                <FilePath>source/GalaxyGeneratorWeightTableDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetaryResourceDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/PlanetaryResourceDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/PlanetaryResourceDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetaryResourceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetGameplayTypeDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/PlanetGameplayTypeDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/PlanetGameplayTypeDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetGameplayTypeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetTemperatureDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/PlanetTemperatureDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/PlanetTemperatureDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetTemperatureDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.GalaxyShapeMergePlans, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/GalaxyShapeMergePlansDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/GalaxyShapeMergePlansDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.GalaxyShapeMergePlans.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetTierDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/PlanetTierDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/PlanetTierDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetTierDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetPopulationCapacityGroupDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/GalaxyGenerator/PlanetPopulationCapacityGroupDefinitions.xml</FilePath>
-                <FilePath>Public/GalaxyGenerator/PlanetPopulationCapacityGroupDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetPopulationCapacityGroupDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Generator.Definitions.PlanetaryAnomalyDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/Simulation/AnomalyDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/AnomalyDefinitions[*].xml</FilePath>
+                <FilePath>source/Generator.Definitions.PlanetaryAnomalyDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- STAR SYSTEMS -->
 
             <DatabasePlugin DataType="StarSystemNodeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/StarSystemNodeDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/StarSystemNodeDefinitions[*].xml</FilePath>
+                <FilePath>source/StarSystemNodeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SPECIAL NODES -->
 
             <DatabasePlugin DataType="SpecialNodeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/SpecialNodeDefinitions.xml</FilePath>
+                <FilePath>source/SpecialNodeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- NODE VISIBILITY CONDITIONS -->
 
             <DatabasePlugin DataType="NodeVisibilityConditionsDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/NodeVisibilityConditionsDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/SpecialNodeDefinitions.xml</FilePath>
+                <FilePath>source/NodeVisibilityConditionsDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ENTITY ACTIONS -->
@@ -181,19 +160,17 @@
 
                     <ExtraType DataType="LaunchDetectionProbeFleetActionDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/EntityActions[*].xml</FilePath>
+                <FilePath>source/EntityActionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- DIPLOMACY -->
 
             <DatabasePlugin DataType="DiplomaticRelationState, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/DiplomaticRelationStates.xml</FilePath>
-                <FilePath>Public/Diplomacy/DiplomaticRelationStates[*].xml</FilePath>
+                <FilePath>source/DiplomaticRelationState.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="DiplomaticAbilityDefinition, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/DiplomaticAbilities.xml</FilePath>
-                <FilePath>Public/Diplomacy/DiplomaticAbilities[*].xml</FilePath>
+                <FilePath>source/DiplomaticAbilityDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ForeignAffairsConstructibleElement, Assembly-CSharp">
@@ -217,7 +194,7 @@
                     <ExtraType DataType="DiplomaticTermFactionPactDefinition, Assembly-CSharp" />
                     <ExtraType DataType="DiplomaticTermRenounceAllianceDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Diplomacy/ForeignAffairsConstructibles[*].xml</FilePath>
+                <FilePath>source/ForeignAffairsConstructibleElement.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="DiplomaticPressureEffectDefinition, Assembly-CSharp">
@@ -227,88 +204,80 @@
                     <ExtraType DataType="DiplomaticPressureEffectDefinition_Turns, Assembly-CSharp" />
                     <ExtraType DataType="DiplomaticPressureEffectDefinition_Systems, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Diplomacy/DiplomaticPressureEffects.xml</FilePath>
-                <FilePath>Public/Diplomacy/DiplomaticPressureEffects[*].xml</FilePath>
+                <FilePath>source/DiplomaticPressureEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="DiplomaticFactionPactEffectDefinition, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/DiplomaticFactionPactEffectDefinitions.xml</FilePath>
-                <FilePath>Public/Diplomacy/DiplomaticFactionPactEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/DiplomaticFactionPactEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="WarPointsRewardDefinition, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/WarPointsRewardDefinitions.xml</FilePath>
+                <FilePath>source/WarPointsRewardDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ContractStubDefinition, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/ContractStubDefinitions.xml</FilePath>
+                <FilePath>source/ContractStubDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SIMULATION -->
 
             <DatabasePlugin DataType="Amplitude.Unity.Simulation.SimulationDescriptor, Assembly-CSharp-firstpass">
-                <FilePath>Public/Simulation/SimulationDescriptors.xml</FilePath>
-                <FilePath>Public/Simulation/SimulationDescriptors[*].xml</FilePath>
-                <FilePath>Public/Simulation/Battles/SimulationDescriptors[*].xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Simulation.SimulationDescriptor.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ResourceDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="LuxuryResourceDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/ResourceDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/ResourceDefinitions[*].xml</FilePath>
+                <FilePath>source/ResourceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PlanetReserveDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PlanetReserveDefinitions.xml</FilePath>
+                <FilePath>source/PlanetReserveDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PropagatedPlanetDescriptorDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PropagatedElementDefinitions[PlanetDescriptor].xml</FilePath>
+                <FilePath>source/PropagatedPlanetDescriptorDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PropagatedPlanetPropertyDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PropagatedElementDefinitions[PlanetProperty].xml</FilePath>
+                <FilePath>source/PropagatedPlanetPropertyDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SystemDefenseThresholdDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/SystemDefenseThresholdDefinitions.xml</FilePath>
+                <FilePath>source/SystemDefenseThresholdDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="LibrarianQuestionDefinition, Assembly-CSharp">
-              <FilePath>Public/Simulation/LibrarianQuestionDefinitions.xml</FilePath>
+              <FilePath>source/LibrarianQuestionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- POPULATIONS -->
 
             <DatabasePlugin DataType="PopulationDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PopulationDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationDefinitions[*].xml</FilePath>
+                <FilePath>source/PopulationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationAspirationDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType Name="PopulationDesireDefinition" DataType="PopulationAspirationDefinition_Desire, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/PopulationAspirationDefinitions.xml</FilePath>
+                <FilePath>source/PopulationAspirationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HappinessStatusSetDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HappinessStatusSetDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HappinessStatusSetDefinitions[*].xml</FilePath>
+                <FilePath>source/"HappinessStatusSetDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HonorThresholdSetDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HonorThresholdSetDefinitions[*].xml</FilePath>
+                <FilePath>source/HonorThresholdSetDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationEventDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="PopulationPoliticalEventDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/PopulationPoliticalEventDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationPoliticalEventDefinitions[*].xml</FilePath>
+                <FilePath>source/PopulationEventDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationStateDefinition, Assembly-CSharp">
@@ -322,7 +291,7 @@
                     <ExtraType DataType="PopulationStateDefinition_HeroAssignedOnSystem, Assembly-CSharp" />
                     <ExtraType DataType="PopulationStateDefinition_SystemInfluenceState, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/PopulationStateDefinitions.xml</FilePath>
+                <FilePath>source/PopulationStateDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationTrait, Assembly-CSharp">
@@ -331,55 +300,45 @@
                     <ExtraType DataType="PopulationModifiersTrait, Assembly-CSharp"/>
                     <ExtraType DataType="PopulationCollectionBonusTrait, Assembly-CSharp"/>
                 </ExtraTypes>
-                <FilePath>Public/Simulation/PopulationPoliticalTraits.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationModifiersTraits.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationModifiersTraits[*].xml</FilePath>
-                <FilePath>Public/Simulation/PopulationCollectionBonusTraits.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationCollectionBonusTraits[*].xml</FilePath>
+                <FilePath>source/PopulationTrait.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationPoliticalTraitDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PopulationPoliticalTraits.xml</FilePath>
+                <FilePath>source/PopulationPoliticalTraitDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationModifiersTrait, Assembly-CSharp">
-                <FilePath>Public/Simulation/PopulationModifiersTraits.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationModifiersTraits[*].xml</FilePath>
+                <FilePath>source/PopulationModifiersTrait.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationCollectionBonusTrait, Assembly-CSharp">
-                <FilePath>Public/Simulation/PopulationCollectionBonusTraits.xml</FilePath>
-                <FilePath>Public/Simulation/PopulationCollectionBonusTraits[*].xml</FilePath>
+                <FilePath>source/PopulationCollectionBonusTrait.xml</FilePath>
             </DatabasePlugin>
 
             <!-- RESOURCE DEPOSITS -->
 
             <DatabasePlugin DataType="ResourceDepositDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ResourceDepositDefinitions.xml</FilePath>
+                <FilePath>source/ResourceDepositDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ANOMALIES -->
 
             <DatabasePlugin DataType="AnomalyDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/AnomalyDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/AnomalyDefinitions[*].xml</FilePath>
+                <FilePath>source/AnomalyDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SHIP DESIGNS -->
 
             <DatabasePlugin DataType="ShipDesignDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/ShipDesignDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/ShipDesignDefinitions[*].xml</FilePath>
+                <FilePath>source/ShipDesignDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ShipRoleDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/ShipRoleDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/ShipRoleDefinitions[*].xml</FilePath>
+                <FilePath>source/ShipRoleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HullDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/HullDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/HullDefinitions[*].xml</FilePath>
+                <FilePath>source/HullDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ModuleDefinition, Assembly-CSharp" Priority="10">
@@ -395,33 +354,31 @@
                     <ExtraType DataType="SystemSupportModuleDefinition, Assembly-CSharp" />
                 </ExtraTypes>
 
-                <FilePath>Public/Simulation/Battles/ModuleDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/ModuleDefinitions[*].xml</FilePath>
+                <FilePath>source/ModuleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MedalDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/MedalDefinitions.xml</FilePath>
+                <FilePath>source/MedalDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="RankDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/RankDefinitions.xml</FilePath>
+                <FilePath>source/RankDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="RankPatternDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/RankPatternDefinitions.xml</FilePath>
+                <FilePath>source/RankPatternDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="LevelUpRuleDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/LevelUpRuleDefinitions.xml</FilePath>
+                <FilePath>source/LevelUpRuleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ShipConditionalConstructionEffectDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/ShipConditionalConstructionEffectDefinitions.xml</FilePath>
+                <FilePath>source/ShipConditionalConstructionEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ShipDesignTemplateDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/ShipDesignTemplateDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/ShipDesignTemplateDefinitions[*].xml</FilePath>
+                <FilePath>source/ShipDesignTemplateDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- CONSTRUCTIBLES -->
@@ -443,41 +400,37 @@
                     <ExtraType DataType="StarSystemTimeBubbleImprovementDefinition, Assembly-CSharp" />
                     <ExtraType DataType="StarSystemCollectRelicImprovementDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[*].xml</FilePath>
+                <FilePath>source/IndustryConstructibleElement.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ANOMALY REDUCTIONS -->
 
             <DatabasePlugin DataType="AnomalyReductionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstructibleElement_AnomalyReductions.xml</FilePath>
-                <FilePath>Public/Simulation/ConstructibleElement_AnomalyReductions[*].xml</FilePath>
+                <FilePath>source/AnomalyReductionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SEARCH CURIOSITIES IN SYSTEM -->
 
             <DatabasePlugin DataType="PlanetCuriosityExpeditionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[PlanetCuriosityExpeditions].xml</FilePath>
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[PlanetCuriosityExpeditions_DLC2].xml</FilePath>
+                <FilePath>source/PlanetCuriosityExpeditionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- RECIPES -->
 
             <DatabasePlugin DataType="RecipeIngredientDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/RecipeIngredientDefinitions.xml</FilePath>
+                <FilePath>source/RecipeIngredientDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="RecipeSlotDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/RecipeSlotDefinitions.xml</FilePath>
+                <FilePath>source/RecipeSlotDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="RecipeSpecialEffectDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/RecipeSpecialEffectDefinitions.xml</FilePath>
+                <FilePath>source/RecipeSpecialEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PlanetColonizationConstructibleElement, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[PlanetColonization].xml</FilePath>
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[PlanetColonization_*].xml</FilePath>
-                <FilePath>Public/Simulation/ConstructibleElement_Industry[PostEarly].xml</FilePath>
+                <FilePath>source/PlanetColonizationConstructibleElement.xml</FilePath>
             </DatabasePlugin>
 
             <!-- TECHNOLOGIES -->
@@ -487,26 +440,26 @@
                     <ExtraType DataType="TechnologyDefinition, Assembly-CSharp" />
                     <ExtraType DataType="TechnologyStageDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/ConstructibleElement_Science[*].xml</FilePath>
+                <FilePath>source/ScienceConstructibleElement.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TechnologyQuadrantDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/QuadrantDefinition.xml</FilePath>
+                <FilePath>source/TechnologyQuadrantDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TechnologyStageDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstructibleElement_Science[*].xml</FilePath>
+                <FilePath>source/TechnologyStageDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TechnologyLinkDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="InteractiveTechnologyLinkDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/TechnologyLinkDefinitions[*].xml</FilePath>
+                <FilePath>source/TechnologyLinkDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TechnologyHelperVariableDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TechnologyHelperVariableDefinitions.xml</FilePath>
+                <FilePath>source/TechnologyHelperVariableDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- Commented on purpose: the UnlockDatatableElements which are loaded in other databases add themselves to the UnlockDatatableElement database in their PostDeserialization() -->
@@ -514,8 +467,7 @@
             <!--<DatabasePlugin DataType="UnlockDatatableElement, Assembly-CSharp"/>-->
 
             <DatabasePlugin DataType="EmpireImprovementDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/EmpireImprovements.xml</FilePath>
-                <FilePath>Public/Simulation/EmpireImprovements[*].xml</FilePath>
+                <FilePath>source/EmpireImprovementDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TimeBubbleDefinition, Assembly-CSharp">
@@ -524,28 +476,26 @@
                     <ExtraType DataType="RollbackTimeBubbleDefinition, Assembly-CSharp" />
                     <ExtraType DataType="FreezeTimeBubbleDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/TimeBubbleDefinitions.xml</FilePath>
+                <FilePath>source/TimeBubbleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- COST REDUCTIONS & CONVERTERS -->
 
             <DatabasePlugin DataType="CostReduction, Assembly-CSharp">
-                <FilePath>Public/Simulation/CostReductions.xml</FilePath>
-                <FilePath>Public/Simulation/CostReductions[*].xml</FilePath>
+                <FilePath>source/CostReduction.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ResourceConverterDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ResourceConverterDefinitions.xml</FilePath>
-              <FilePath>Public/Simulation/ResourceConverterDefinitions[*].xml</FilePath>
+                <FilePath>source/ResourceConverterDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ConstructionRefundDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstructionRefundDefinitions[*].xml</FilePath>
+                <FilePath>source/ConstructionRefundDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- BAILIFF -->
             <DatabasePlugin DataType="BailiffDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/BailiffDefinitions.xml</FilePath>
+                <FilePath>source/BailiffDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- TEMPORARY EFFECTS -->
@@ -553,18 +503,17 @@
                 <ExtraTypes>
                     <ExtraType DataType="TemporaryEffectMinorRelationDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/TemporaryEffectDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/TemporaryEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/TemporaryEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- GUI -->
 
             <DatabasePlugin DataType="Amplitude.Unity.Gui.GuiWindowsStackDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/Gui/GuiWindowsStackDefinition.xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Gui.GuiWindowsStackDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Amplitude.Unity.Gui.GuiTooltipDescription, Assembly-CSharp-firstpass">
-                <FilePath>Public/Gui/GuiTooltipDescriptions*.xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Gui.GuiTooltipDescription.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Amplitude.Unity.Gui.GuiElement, Assembly-CSharp-firstpass">
@@ -618,76 +567,72 @@
                     <ExtraType DataType="ContextualPromptGuiElement, Assembly-CSharp" />
                     <ExtraType DataType="RandomGuiElement, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Gui/GuiElements[*].xml</FilePath>
-                <FilePath>Public/Gui/Screens/GuiElements[*].xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Gui.GuiElement.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="LoadingTipGuiElement, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiElements[LoadingTips*].xml</FilePath>
+                <FilePath>source/LoadingTipGuiElement.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="AllianceGuiElement, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiElements[*].xml</FilePath>
+                <FilePath>source/AllianceGuiElement.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GuiSorter, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiSorter.xml</FilePath>
+                <FilePath>source/GuiSorter.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GuiResourcePropertySet, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiResourcePropertySets.xml</FilePath>
-                <FilePath>Public/Gui/GuiResourcePropertySets[*].xml</FilePath>
+                <FilePath>source/GuiResourcePropertySet.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GuiPlanetTypeBaseStats, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiPlanetTypeBaseStats.xml</FilePath>
+                <FilePath>source/GuiPlanetTypeBaseStats.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GuiPlanetStatsModifier, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiPlanetStatsModifiers.xml</FilePath>
+                <FilePath>source/GuiPlanetStatsModifier.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterPlayTrajectoryDefinitionCollection, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiPlayVisualTrajectories.xml</FilePath>
-                <FilePath>Public/Gui/GuiPlayVisualCards.xml</FilePath>
+                <FilePath>source/EncounterPlayTrajectoryDefinitionCollection.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GuiHighlightDefinition, Assembly-CSharp">
-                <FilePath>Public/Gui/Miscellaneous/GuiHighlightDefinition.xml</FilePath>
+                <FilePath>source/GuiHighlightDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- MISCELLANEOUS -->
             <DatabasePlugin DataType="PanelFeatureModuleEffectsDefinition, Assembly-CSharp">
-                <FilePath>Public/Gui/Miscellaneous/PanelFeatureModuleEffectsDefinition.xml</FilePath>
+                <FilePath>source/PanelFeatureModuleEffectsDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PropertyFilteringRuleDefinition, Assembly-CSharp">
-                <FilePath>Public/Gui/Miscellaneous/PropertyFilteringRuleDefinitions.xml</FilePath>
+                <FilePath>source/PropertyFilteringRuleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- MOUSE CURSOR -->
 
             <DatabasePlugin DataType="GuiCursor, Assembly-CSharp">
-                <FilePath>Public/Gui/GuiCursors.xml</FilePath>
+                <FilePath>source/GuiCursor.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MouseCursorRule, Assembly-CSharp" Priority="-20">
-                <FilePath>Public/Gui/GuiCursorRules.xml</FilePath>
+                <FilePath>source/MouseCursorRule.xml</FilePath>
             </DatabasePlugin>
 
             <!-- MAPPING -->
 
             <DatabasePlugin DataType="Amplitude.Unity.View.Mapping.Xml.XmlMapping, Assembly-CSharp-firstpass">
-                <FilePath>Public/Mapping/Mapping.xml</FilePath>
-                <FilePath>Public/Mapping/Mapping[*].xml</FilePath>
+                <FilePath>source/Amplitude.Unity.View.Mapping.Xml.XmlMapping.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Palette, Assembly-CSharp">
-                <FilePath>Public/Mapping/Palettes.xml</FilePath>
+                <FilePath>source/Palette.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PaletteChroma, Assembly-CSharp">
-                <FilePath>Public/Mapping/PalettesChroma.xml</FilePath>
+                <FilePath>source/PaletteChroma.xml</FilePath>
             </DatabasePlugin>
 
             <!-- FACTION TRAITS -->
@@ -698,34 +643,29 @@
                     <ExtraType DataType="FactionAffinityMapping, Assembly-CSharp" />
                     <ExtraType DataType="FactionPopulationTrait, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/FactionTraits.xml</FilePath>
-                <FilePath>Public/Simulation/FactionTraits[*].xml</FilePath>
+                <FilePath>source/FactionTrait.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="FactionAffinity, Assembly-CSharp">
-                <FilePath>Public/Simulation/FactionTraits[*].xml</FilePath>
+                <FilePath>source/FactionAffinity.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="FactionAffinityMapping, Assembly-CSharp">
-                <FilePath>Public/Simulation/FactionTraits[*].xml</FilePath>
+                <FilePath>source/FactionAffinityMapping.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="FactionTraitCategoryDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/FactionTraitCategoryDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/FactionTraitCategoryDefinitions[*].xml</FilePath>
+                <FilePath>source/FactionTraitCategoryDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- PERSONNALITIES -->
 
             <DatabasePlugin DataType="MinorFactionPersonalityDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/MinorFactionPersonalityDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/MinorFactionPersonalityDefinitions[*].xml</FilePath>
+                <FilePath>source/MinorFactionPersonalityDefinition.xml</FilePath>
             </DatabasePlugin>
 
-            <!-- PERSONNALITIES -->
-
             <DatabasePlugin DataType="PersonalityDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PersonalityDefinitions.xml</FilePath>
+                <FilePath>source/PersonalityDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- FACTIONS -->
@@ -738,112 +678,109 @@
                     <ExtraType DataType="PirateFaction, Assembly-CSharp" />
                     <ExtraType DataType="AcademyFaction, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/Factions[*].xml</FilePath>
+                <FilePath>source/Faction.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MajorFaction, Assembly-CSharp">
-                <FilePath>Public/Simulation/Factions[*].xml</FilePath>
+                <FilePath>source/MajorFaction.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MinorFaction, Assembly-CSharp">
-                <FilePath>Public/Simulation/Factions[*].xml</FilePath>
+                <FilePath>source/MinorFaction.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="AcademyFaction, Assembly-CSharp">
-                <FilePath>Public/Simulation/Factions[*].xml</FilePath>
+                <FilePath>source/AcademyFaction.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ACADEMY ROLE PREFERENCE -->
           
             <DatabasePlugin DataType="AcademyRolePreference, Assembly-CSharp">
-              <FilePath>Public/Simulation/AcademyRolePreference.xml</FilePath>
+              <FilePath>source/AcademyRolePreference.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ACADEMY NAMED SHIPS -->
             <DatabasePlugin DataType="NamedShipsDefinition, Assembly-CSharp">
-              <FilePath>Public/Simulation/NamedShipsDefinitions.xml</FilePath>
+              <FilePath>source/NamedShipsDefinition.xml</FilePath>
             </DatabasePlugin>
 
           <!-- ACADEMY NAMED SHIPS -->
           <DatabasePlugin DataType="EmpireRelicSlotDefinition, Assembly-CSharp">
-            <FilePath>Public/Simulation/EmpireRelicSlotDefinition.xml</FilePath>
+            <FilePath>source/EmpireRelicSlotDefinition.xml</FilePath>
           </DatabasePlugin>
           
             <!-- ENCOUNTER -->
 
             <DatabasePlugin DataType="EncounterArenaDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterArenaDefinitions.xml</FilePath>
+                <FilePath>source/EncounterArenaDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterFlotillaMatchDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterFlotillaMatchDefinitions.xml</FilePath>
+                <FilePath>source/EncounterFlotillaMatchDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterEntityDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="EncounterEntityDefinition_EffectArea, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/Battles/EncounterEntityDefinitions.xml</FilePath>
+                <FilePath>source/EncounterEntityDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterPlayDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterPlayDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/EncounterPlayDefinitions[*].xml</FilePath>
+                <FilePath>source/EncounterPlayDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterSequenceDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterSequenceDefinitions.xml</FilePath>
+                <FilePath>source/EncounterSequenceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterArrivalSequenceDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterArrivalSequenceDefinitions.xml</FilePath>
+                <FilePath>source/EncounterArrivalSequenceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterFormationDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterFormationDefinitions.xml</FilePath>
+                <FilePath>source/EncounterFormationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterTargetingRangeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterTargetingRangeDefinitions.xml</FilePath>
+                <FilePath>source/EncounterTargetingRangeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EncounterEventToRealizationEventDictionaryDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/EncounterEventToRealizationEventDictionaryDefinitions.xml</FilePath>
+                <FilePath>source/EncounterEventToRealizationEventDictionaryDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SalvoDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/SalvoDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/SalvoDefinitions[*].xml</FilePath>
+                <FilePath>source/SalvoDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="BattleActionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/BattleActionDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/BattleActionDefinitions[*].xml</FilePath>
+                <FilePath>source/BattleActionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SquadronMissionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/Squadrons/SquadronMissionDefinitions.xml</FilePath>
+                <FilePath>source/SquadronMissionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SquadronStanceDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/Squadrons/SquadronStanceDefinitions.xml</FilePath>
+                <FilePath>source/SquadronStanceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SquadronStanceSelectorDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/Squadrons/SquadronStanceSelectorDefinitions.xml</FilePath>
+                <FilePath>source/SquadronStanceSelectorDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SquadronFormationDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/Squadrons/SquadronFormationDefinitions.xml</FilePath>
+                <FilePath>source/SquadronFormationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SquadronMetaFormationDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/Squadrons/SquadronMetaFormationDefinitions.xml</FilePath>
+                <FilePath>source/SquadronMetaFormationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- To be removed... Used here to generate xsd... -->
             <DatabasePlugin DataType="RealizationEventDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/Battles/RealizationEventDefinitions.xml</FilePath>
+                <FilePath>source/RealizationEventDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="BattleEffectDefinition, Assembly-CSharp">
@@ -854,46 +791,39 @@
                     <ExtraType DataType="BattleEffectDefinition_EmpireReward_Resource, Assembly-CSharp" />
                     <ExtraType DataType="BattleEffectDefinition_EmpireReward_SpawnShips, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/Battles/BattleEffectDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/Battles/BattleEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/BattleEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="CameraShotDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="CameraShotDefinition_EncounterEvent, Assembly-CSharp" />
                 </ExtraTypes>
-                <!--<FilePath>Public/Simulation/Battles/RealizationShotDefinitions.xml</FilePath>-->
-                <FilePath>Public/Simulation/Battles/RealizationPoolShots/RealizationShotsDefinitions[*].xml</FilePath>
-                <!--<FilePath>Public/Simulation/Battles/RealizationPoolShots/RealizationShotsDefinitions[Main]_EARLY_ACCESS.xml</FilePath>-->
-                <!--<FilePath>Public/Simulation/Battles/RealizationPoolShots/RealizationShotsDefinitions[Cravers].xml</FilePath>
-        <FilePath>Public/Simulation/Battles/RealizationPoolShots/RealizationShotsDefinitions[Arrivals].xml</FilePath>
-        <FilePath>Public/Simulation/Battles/RealizationPoolShots/RealizationShotsDefinitions[Destruction_Scavengers].xml</FilePath>-->
+                <FilePath>source/CameraShotDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SENATE -->
 
             <DatabasePlugin DataType="PoliticsDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PoliticsDefinitions.xml</FilePath>
+                <FilePath>source/PoliticsDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GovernmentDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/GovernmentDefinitions.xml</FilePath>
+                <FilePath>source/GovernmentDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="LawDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/LawDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/LawDefinitions[*].xml</FilePath>
+                <FilePath>source/LawDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ElectionProcessTaskDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="ElectionProcessMetaTaskDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/ElectionProcessTaskDefinitions.xml</FilePath>
+                <FilePath>source/ElectionProcessTaskDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ElectionProcessDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ElectionProcessDefinitions.xml</FilePath>
+                <FilePath>source/ElectionProcessDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="SenatorInteractionDefinition, Assembly-CSharp">
@@ -903,62 +833,57 @@
                     <ExtraType DataType="SenatorInteractionDefinition_MakeACoup, Assembly-CSharp" />
                     <ExtraType DataType="SenatorInteractionDefinition_Seduce, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/SenatorInteractionDefinitions.xml</FilePath>
+                <FilePath>source/SenatorInteractionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ElectionActionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ElectionActionDefinitions.xml</FilePath>
+                <FilePath>source/ElectionActionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PoliticsSupportStatusDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PoliticsSupportStatusDefinitions.xml</FilePath>
+                <FilePath>source/PoliticsSupportStatusDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PoliticsExperienceStatusDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PoliticsExperienceStatusDefinitions.xml</FilePath>
+                <FilePath>source/PoliticsExperienceStatusDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- HEROES -->
 
             <DatabasePlugin DataType="HeroAffinityDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroAffinityDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HeroAffinityDefinitions[*].xml</FilePath>
+                <FilePath>source/HeroAffinityDefinitions.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroClassDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroClassDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HeroClassDefinitions[*].xml</FilePath>
+                <FilePath>source/HeroClassDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroPoliticsDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroPoliticsDefinitions.xml</FilePath>
+                <FilePath>source/HeroPoliticsDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroSkillTreeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroSkillTreeDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HeroSkillTreeDefinitions[*].xml</FilePath>
+                <FilePath>source/HeroSkillTreeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroSkillDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroSkillDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HeroSkillDefinitions[*].xml</FilePath>
+                <FilePath>source/HeroSkillDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroMasteryDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroMasteryDefinitions.xml</FilePath>
+                <FilePath>source/HeroMasteryDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroUnlockGaugeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroUnlockGaugeDefinitions.xml</FilePath>
+                <FilePath>source/HeroUnlockGaugeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ScoreProviderListDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ScoreProviderListDefinitions.xml</FilePath>
+                <FilePath>source/ScoreProviderListDefinitions.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HeroDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/HeroDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HeroDefinitions[*].xml</FilePath>
+                <FilePath>source/HeroDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- QUESTS -->
@@ -967,8 +892,7 @@
                 <ExtraTypes>
                     <ExtraType DataType="TutorialDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Quests/QuestDefinitions[*].xml</FilePath>
-                <FilePath>Public/Tutorials/TutorialDefinitions[*].xml</FilePath>
+                <FilePath>source/QuestDefinition.xml</FilePath>
                 <Overrides>
                     <Override Name="Prerequisites" DataType="Amplitude.Query.Xml.XmlQueryPrerequisites, Assembly-CSharp-firstpass">
                         <ExtraType Name="FilterConstellationByDistance" DataType="QuestFilterConstellationByDistance, Assembly-CSharp" />
@@ -994,30 +918,29 @@
                 <ExtraTypes>
                     <ExtraType DataType="QuestEffectAddDescriptorsDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Quests/Effects/QuestEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/QuestEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="QuestTriggeringProbabilityDefinition, Assembly-CSharp">
-                <FilePath>Public/Quests/QuestTriggeringProbabilityDefinitions.xml</FilePath>
+                <FilePath>source/QuestTriggeringProbabilityDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="QuestTriggeringMutualExclusionDefinition, Assembly-CSharp">
-                <FilePath>Public/Quests/QuestTriggeringMutualExclusionDefinitions.xml</FilePath>
+                <FilePath>source/QuestTriggeringMutualExclusionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Droplist, Assembly-CSharp">
-                <FilePath>Public/Quests/Droplists/Droplists[*].xml</FilePath>
+                <FilePath>source/Droplist.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="NodeEffectDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/NodeEffectDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/NodeEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/NodeEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- TUTORIAL -->
 
             <DatabasePlugin DataType="TutorialDefinition, Assembly-CSharp">
-                <FilePath>Public/Tutorials/TutorialDefinitions[*].xml</FilePath>
+                <FilePath>source/TutorialDefinition.xml</FilePath>
                 <Overrides>
                     <Override Name="Prerequisites" DataType="Amplitude.Query.Xml.XmlQueryPrerequisites, Assembly-CSharp-firstpass">
                         <ExtraType Name="FilterConstellationByDistance" DataType="QuestFilterConstellationByDistance, Assembly-CSharp" />
@@ -1041,7 +964,7 @@
             <!-- VICTORY CONDITIONS -->
 
             <DatabasePlugin DataType="VictoryConditionDefinition, Assembly-CSharp" Priority="-10">
-                <FilePath>Public/Statistics and Achievements/VictoryConditionDefinitions.xml</FilePath>
+                <FilePath>source/VictoryConditionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- GAME STATISTICS -->
@@ -1050,42 +973,38 @@
                 <ExtraTypes>
                     <ExtraType DataType="InterpreterBasedGameStatisticDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Statistics and Achievements/GameStatisticDefinitions.xml</FilePath>
+                <FilePath>source/GameStatisticDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- Achievements -->
 
             <DatabasePlugin DataType="Amplitude.Unity.Achievement.AchievementDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/Statistics and Achievements/AchievementDefinitions.xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Achievement.AchievementDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="Amplitude.Unity.Achievement.AchievementStatisticDefinition, Assembly-CSharp-firstpass">
-                <FilePath>Public/Statistics and Achievements/AchievementStatisticDefinitions.xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Achievement.AchievementStatisticDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- FLEET NAMING -->
             <DatabasePlugin DataType="FleetNameMappingDefinition, Assembly-CSharp">
-                <FilePath>Public/Mapping/FleetNameMappingDefinitions.xml</FilePath>
-                <FilePath>Public/Mapping/FleetNameMappingDefinitions[*].xml</FilePath>
+                <FilePath>source/FleetNameMappingDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- CURIOSITIES -->
 
             <DatabasePlugin DataType="CuriosityDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/CuriosityDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/CuriosityDefinitions[*].xml</FilePath>
+                <FilePath>source/CuriosityDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="CuriosityDroplist, Assembly-CSharp">
-                <FilePath>Public/Simulation/CuriosityDroplists.xml</FilePath>
-                <FilePath>Public/Simulation/CuriosityDroplists[*].xml</FilePath>
+                <FilePath>source/CuriosityDroplist.xml</FilePath>
             </DatabasePlugin>
 
             <!-- ORDER POLICIES -->
 
             <DatabasePlugin DataType="Amplitude.Unity.Game.Orders.OrderPolicySetup, Assembly-CSharp-firstpass">
-                <FilePath>Public/Networking/OrderPolicySetups.xml</FilePath>
-                <FilePath>Public/Networking/OrderPolicySetups[*].xml</FilePath>
+                <FilePath>source/OrderPolicySetup.xml</FilePath>
             </DatabasePlugin>
 
             <!-- GAME AND WORLD SETTINGS -->
@@ -1094,27 +1013,25 @@
                 <ExtraTypes>
                     <ExtraType DataType="WorldSettingDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Settings/GameSettingDefinitions.xml</FilePath>
-                <FilePath>Public/Settings/GameSettingDefinitions[*].xml</FilePath>
-                <FilePath>Public/Settings/WorldSettingDefinitions.xml</FilePath>
+                <FilePath>source/GameSettingDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GameSettingRestrictionDefinition, Assembly-CSharp">
-                <FilePath>Public/Settings/GameSettingRestrictionDefinition.xml</FilePath>
+                <FilePath>source/GameSettingRestrictionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- TRADING -->
 
             <DatabasePlugin DataType="TradingCompanyDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TradingCompanyDefinitions.xml</FilePath>
+                <FilePath>source/TradingCompanyDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TradableCategoryDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TradableCategoryDefinitions.xml</FilePath>
+                <FilePath>source/TradableCategoryDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TradableSubCategoryDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TradableSubCategoryDefinitions.xml</FilePath>
+                <FilePath>source/TradableSubCategoryDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TradableDefinition, Assembly-CSharp">
@@ -1123,74 +1040,69 @@
                     <ExtraType DataType="TradableShipDefinition, Assembly-CSharp" />
                     <ExtraType DataType="TradableHeroDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/TradableDefinitions[*].xml</FilePath>
+                <FilePath>source/TradableDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MarketplaceAdvertisementDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/MarketplaceAdvertisementDefinitions.xml</FilePath>
+                <FilePath>source/MarketplaceAdvertisementDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="TradingCompanyImprovementDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TradingCompanyImprovementDefinitions.xml</FilePath>
+                <FilePath>source/TradingCompanyImprovementDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MarketplaceEventDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/MarketplaceEventDefinitions.xml</FilePath>
+                <FilePath>source/MarketplaceEventDefinition.xml</FilePath>
             </DatabasePlugin>
             
             <!-- ACADEMY STATES -->
 
             <DatabasePlugin DataType="AcademyStateDefinition, Assembly-CSharp">
-                <FilePath>Public/AcademyFactions/AcademyStateDefinitions.xml</FilePath>
-                <FilePath>Public/AcademyFactions/AcademyStateDefinitions[*].xml</FilePath>
+                <FilePath>source/AcademyStateDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- MINOR STATES -->
 
             <DatabasePlugin DataType="MinorStateDefinition, Assembly-CSharp">
-                <FilePath>Public/MinorFactions/MinorStateDefinitions.xml</FilePath>
+                <FilePath>source/MinorStateDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ImprovementListDefinition, Assembly-CSharp">
-                <FilePath>Public/MinorFactions/ImprovementListDefinitions.xml</FilePath>
-                <FilePath>Public/AcademyFactions/ImprovementListDefinitions[*].xml</FilePath>
+                <FilePath>source/ImprovementListDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PlanetImprovementMappingDefinition, Assembly-CSharp">
-                <FilePath>Public/MinorFactions/PlanetImprovementMappingDefinitions.xml</FilePath>
+                <FilePath>source/PlanetImprovementMappingDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- FLEET MISSIONS -->
 
             <DatabasePlugin DataType="FleetMissionDefinition, Assembly-CSharp">
-                <FilePath>Public/MinorFactions/FleetMissionDefinitions.xml</FilePath>
-                <FilePath>Public/AcademyFactions/FleetMissionDefinitions[*].xml</FilePath>
+                <FilePath>source/FleetMissionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- SYSTEM DISCOVERY -->
 
             <DatabasePlugin DataType="SystemDiscoverySequenceDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/SystemDiscoverySequenceDefinitions.xml</FilePath>
+                <FilePath>source/SystemDiscoverySequenceDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- CURVES -->
 
             <DatabasePlugin DataType="Amplitude.Unity.Framework.AnimationCurve, Assembly-CSharp-firstpass">
-                <FilePath>Public/Curves/AnimationCurves[*].xml</FilePath>
+                <FilePath>source/Amplitude.Unity.Framework.AnimationCurve.xml</FilePath>
             </DatabasePlugin>
 
             <!-- GROUND BATTLE -->
             <DatabasePlugin DataType="GroundBattleViewerConfig, Assembly-CSharp">
-                <FilePath>Public/GroundBattle/GroundBattleViewerConfigs.xml</FilePath>
+                <FilePath>source/GroundBattleViewerConfig.xml</FilePath>
             </DatabasePlugin>
             <DatabasePlugin DataType="GroundBattleUnitConfig, Assembly-CSharp">
-                <FilePath>Public/GroundBattle/GroundBattleUnitConfigs.xml</FilePath>
-                <FilePath>Public/GroundBattle/GroundBattleUnitConfigs[*].xml</FilePath>
+                <FilePath>source/GroundBattleUnitConfig.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GroundBattleStrategyDefinition, Assembly-CSharp">
-                <FilePath>Public/GroundBattle/GroundBattleStrategies.xml</FilePath>
-                <FilePath>Public/GroundBattle/GroundBattleStrategies[*].xml</FilePath>
+                <FilePath>source/GroundBattleStrategyDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GroundBattleOutcomeDefinition, Assembly-CSharp">
@@ -1201,17 +1113,16 @@
                     <ExtraType DataType="GroundBattleOutcomeRazeGhostDefinition, Assembly-CSharp" />
                     <ExtraType DataType="GroundBattleOutcomeCreateGhostDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/GroundBattle/GroundBattleOutcomeDefinitions.xml</FilePath>
-                <FilePath>Public/GroundBattle/GroundBattleOutcomeDefinitions[*].xml</FilePath>
+                <FilePath>source/GroundBattleOutcomeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ManpowerUpgradeDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ManpowerUpgradeDefinition.xml</FilePath>
+                <FilePath>source/ManpowerUpgradeDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- System supervisors -->
             <DatabasePlugin DataType="SystemSupervisorDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/SystemSupervisorDefinitions.xml</FilePath>
+                <FilePath>source/SystemSupervisorDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="MinigameDefinition, Assembly-CSharp">
@@ -1219,44 +1130,43 @@
                     <ExtraType DataType="KingOfTheHillMinigameDefinition, Assembly-CSharp" />
                     <ExtraType DataType="ExplorationMinigameDefinition, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/MinigameDefinitions.xml</FilePath>
+                <FilePath>source/MinigameDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <!-- Constellation bonus -->
             <DatabasePlugin DataType="ConstellationOwnershipBonusDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/ConstellationOwnershipBonusDefinitions.xml</FilePath>
+                <FilePath>source/ConstellationOwnershipBonusDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ContextualDiplomaticTermDefinition, Assembly-CSharp">
-                <FilePath>Public/Diplomacy/ContextualDiplomaticTermDefinition.xml</FilePath>
-                <FilePath>Public/Diplomacy/ContextualDiplomaticTermDefinitions[*].xml</FilePath>
+                <FilePath>source/ContextualDiplomaticTermDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PiratePowerLevelDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PiratePowerLevelDefinitions.xml</FilePath>
+                <FilePath>source/PiratePowerLevelDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PirateRelationThresholdDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PirateRelationThresholdDefinitions.xml</FilePath>
+                <FilePath>source/PirateRelationThresholdDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="StarDestructionDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/StarDestructionDefinitions.xml</FilePath>
+                <FilePath>source/StarDestructionDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="EffectZoneDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/EffectZoneDefinitions[*].xml</FilePath>
+                <FilePath>source/EffectZoneDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="ZoneEffectDefinition, Assembly-CSharp">
                 <ExtraTypes>
                     <ExtraType DataType="ZoneEffectDefinition_ApplyDescriptors, Assembly-CSharp" />
                 </ExtraTypes>
-                <FilePath>Public/Simulation/ZoneEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/ZoneEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="CitadelDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/CitadelDefinitions[*].xml</FilePath>
+                <FilePath>source/CitadelDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="BasicModuleDefinition, Assembly-CSharp" Priority="10">
@@ -1264,7 +1174,7 @@
                     <ExtraType DataType="BasicWeaponModuleDefinition, Assembly-CSharp" />
                 </ExtraTypes>
 
-                <FilePath>Public/Simulation/Battles/BasicModuleDefinitions[*].xml</FilePath>
+                <FilePath>source/BasicModuleDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="RemainsDefinition, Assembly-CSharp">
@@ -1275,12 +1185,11 @@
                     <ExtraType DataType="GroundBattleRemainsDefinition, Assembly-CSharp" />
                 </ExtraTypes>
 
-                <FilePath>Public/Simulation/RemainsDefinitions.xml</FilePath>
+                <FilePath>source/RemainsDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="GroundBattleFormationDefinition, Assembly-CSharp">
-                <FilePath>Public/GroundBattle/GroundBattleFormationDefinitions.xml</FilePath>
-                <FilePath>Public/GroundBattle/GroundBattleFormationDefinitions[*].xml</FilePath>
+                <FilePath>source/GroundBattleFormationDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HackingProgramDefinition, Assembly-CSharp">
@@ -1294,8 +1203,7 @@
                     <ExtraType DataType="TimedHackingProgramDefinition, Assembly-CSharp" />
                 </ExtraTypes>
 
-                <FilePath>Public/Simulation/HackingProgramDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HackingProgramDefinitions[*].xml</FilePath>
+                <FilePath>source/HackingProgramDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HackingOperationOutcomeDefinition, Assembly-CSharp">
@@ -1338,30 +1246,27 @@
                     <ExtraType DataType="HackingOperationOutcomeSetDefinition, Assembly-CSharp"/>
 
                 </ExtraTypes>
-                <FilePath>Public/Simulation/HackingOperationOutcomeDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/HackingOperationOutcomeDefinitions[*].xml</FilePath>
+                <FilePath>source/HackingOperationOutcomeDefinition.xml</FilePath>
             </DatabasePlugin>
             
             <DatabasePlugin DataType="TraitorBonusThresholdDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/TraitorBonusThresholdDefinitions[*].xml</FilePath>
+                <FilePath>source/TraitorBonusThresholdDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="PopulationLossResourceGainDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/PopulationLossResourceGainDefinitions[*].xml</FilePath>
+                <FilePath>source/PopulationLossResourceGainDefinition.xml</FilePath>
             </DatabasePlugin>
             
             <DatabasePlugin DataType="DisplacementEffectDefinition, Assembly-CSharp">
-                <FilePath>Public/Simulation/DisplacementEffectDefinitions.xml</FilePath>
-                <FilePath>Public/Simulation/DisplacementEffectDefinitions[*].xml</FilePath>
+                <FilePath>source/DisplacementEffectDefinition.xml</FilePath>
             </DatabasePlugin>
 
           <!-- Academy -->
           <DatabasePlugin DataType="Droplist, Assembly-CSharp">
-            <FilePath>Public/Simulation/AcademyRequestDroplists.xml</FilePath>
-            <FilePath>Public/Simulation/AcademyRequestDroplists[*].xml</FilePath>
+            <FilePath>source/Droplist.xml</FilePath>
           </DatabasePlugin>
           <DatabasePlugin DataType="AcademyReparationScoresDefinition, Assembly-CSharp">
-            <FilePath>Public/Simulation/AcademyReparationScoresDefinitions.xml</FilePath>
+            <FilePath>source/AcademyReparationScoresDefinition.xml</FilePath>
           </DatabasePlugin>
 
         </Plugins>

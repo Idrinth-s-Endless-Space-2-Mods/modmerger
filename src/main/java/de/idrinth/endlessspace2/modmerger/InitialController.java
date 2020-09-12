@@ -16,6 +16,8 @@ import org.xml.sax.SAXException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -24,16 +26,17 @@ import javax.xml.transform.stream.StreamResult;
 public class InitialController {
 
   @FXML
-  private TextField endlessSpaceFolder;
+  private TextField steamFolder;
+  @FXML
+  private TextField mods;
 
   @FXML
   private void start() {
-    //for testing assume we know what mods to merge - remember to subscribe
-    String[] mods = {"2216068650", "932394338", "1224504743", "1263186686", "1301600120", "1316786885"};
-    var workshopfolder = new File("C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\392110");
+    String[] modList = mods.getText().split(",");
+    var workshopfolder = new File(steamFolder.getText() + "/steamapps/workshop/content/392110");
     var assets = new HashMap<String, File>();
     var data = new HashMap<String, HashMap<String, String>>();
-    for (var mod : mods) {
+    for (var mod : modList) {
       load(new File(workshopfolder.toString() + '/' + mod), assets, data);
     }
     write(data, assets);
@@ -118,8 +121,6 @@ public class InitialController {
                       data.putIfAbsent(type, new HashMap<>());
                       data.get(type).put(name, nodeToString(element));
                     }
-                  } else {
-                    System.out.println(doc.getFirstChild().getNodeName());
                   }
                 } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
                   System.err.println(96);
@@ -135,7 +136,11 @@ public class InitialController {
   }
   private static String nodeToString(Node node) throws TransformerException {
     StringWriter sw = new StringWriter();
-    TransformerFactory.newInstance().newTransformer().transform(new DOMSource(node), new StreamResult(sw));
+
+    Transformer t = TransformerFactory.newInstance().newTransformer();
+    t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+    t.transform(new DOMSource(node), new StreamResult(sw));
+
     return sw.toString();
   }
   private void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets)
@@ -143,7 +148,7 @@ public class InitialController {
     var name = "Merge" + LocalTime.now().toString();
     name = name.replaceAll(":", "-");
     name = name.replaceAll("\\.", "-");
-    var target = new File("C:/Users/Björn/Documents/Endless space 2/Community/" + name);
+    var target = new File("C:/users/Björn/Documents/Endless space 2/Community/" + name);
     if (!target.isDirectory()) {
       target.mkdirs();
     }
@@ -162,9 +167,12 @@ public class InitialController {
       out.getParentFile().mkdirs();
       try {
         out.createNewFile();
-        for (String item : data.get(type).keySet()) {
+        FileUtils.write(out, "<Datatable>", Charset.defaultCharset(), true);
+        for (String item : data.get(type).values()) {
+          System.out.println(item);
           FileUtils.write(out, item, Charset.defaultCharset(), true);
         }
+        FileUtils.write(out, "</Datatable>", Charset.defaultCharset(), true);
       } catch (IOException ex) {
           System.err.println(135);
           System.err.println(ex);
