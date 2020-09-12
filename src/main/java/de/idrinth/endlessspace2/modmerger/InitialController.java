@@ -26,12 +26,13 @@ public class InitialController {
     var assets = new HashMap<String, File>();
     var data = new HashMap<String, HashMap<String, String>>();
     for (var mod : mods) {
-      load(new File(workshopfolder.getAbsoluteFile().toString() + '/' + mod), assets, data);
+      load(new File(workshopfolder.toString() + '/' + mod), assets, data);
     }
     write(data, assets);
   }
 
-  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data) {
+  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data)
+  {
     for (var file : folder.listFiles()) {
       if (file.getName().endsWith(".xml")) {
         try {
@@ -43,14 +44,27 @@ public class InitialController {
             return;
           }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
+          System.err.println(49);
+          System.err.println(ex);
           //not parseable, do we care?
         }
       }
     }
+    System.out.println(assets);
   }
   private void collect(File folder, HashMap<String, File> assets)
   {
-    //anything not xml saved as filepath => File
+    collect(folder, assets, folder);
+  }
+  private void collect(File folder, HashMap<String, File> assets, File root)
+  {
+    for (var file : folder.listFiles()) {
+      if (file.isDirectory() && !file.getName().startsWith(".") && !file.getName().equals("Documentation")) {
+        collect(file, assets, root);
+      } else if (!file.isDirectory() && !file.getName().endsWith(".xml") && !file.getName().startsWith(".") && !file.getName().equals("PublishedFile.Id")) {
+        assets.put(file.getAbsolutePath().substring(root.getAbsolutePath().length()), file);
+      }
+    }
   }
   private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data)
   {
@@ -59,7 +73,9 @@ public class InitialController {
   private void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets)
   {
     var name = "Merge" + LocalTime.now().toString();
-    var target = new File("~/Documents/Endless space 2/Community/" + name);
+    name = name.replaceAll(":", "-");
+    name = name.replaceAll("\\.", "-");
+    var target = new File("C:/users/Björn/Documents/Endless space 2/Community/" + name);
     if (!target.isDirectory()) {
       target.mkdirs();
     }
@@ -69,6 +85,8 @@ public class InitialController {
       try {
         FileUtils.copyFile(assets.get(path), out);
       } catch (IOException ex) {
+          System.err.println(87);
+          System.err.println(ex);
       }
     }
     for (String type : data.keySet()) {
@@ -80,12 +98,16 @@ public class InitialController {
           FileUtils.write(out, item, Charset.defaultCharset(), true);
         }
       } catch (IOException ex) {
+          System.err.println(100);
+          System.err.println(ex);
       }
     }
     var modFile = new File(target.toString() + "/" + name + ".xml");
     try {
       FileUtils.copyInputStreamToFile(getClass().getResourceAsStream("Merge.xml"), modFile);
     } catch (IOException ex) {
+          System.err.println(107);
+          System.err.println(ex);
     }
   }
 }
