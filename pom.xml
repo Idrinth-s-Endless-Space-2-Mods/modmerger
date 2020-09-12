@@ -15,6 +15,11 @@
         <main.class>de.idrinth.endlessspace2.modmerger.Launcher</main.class>
     </properties>
     <dependencies>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.7</version>
+      </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
