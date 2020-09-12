@@ -17,11 +17,15 @@
                 <HBox spacing="20.0" AnchorPane.topAnchor="0.0">
                     <children>
                       <VBox>
+                        <Label text="Merged Mod Name:"/>
+                        <TextField fx:id="modName"/>
+                      </VBox>
+                      <VBox>
                         <Label text="Steam Folder:"/>
                         <TextField fx:id="steamFolder"/>
                       </VBox>
                       <VBox>
-                        <Label text="Mods to Merge(IDs comma separated)"/>
+                        <Label text="Mods to Merge(IDs comma separated):"/>
                         <TextField fx:id="mods"/>
                       </VBox>
                       <VBox>

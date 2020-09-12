@@ -16,12 +16,14 @@ import org.xml.sax.SAXException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.commons.io.IOUtils;
 
 public class InitialController {
 
@@ -29,17 +31,36 @@ public class InitialController {
   private TextField steamFolder;
   @FXML
   private TextField mods;
+  @FXML
+  private TextField modName;
 
   @FXML
   private void start() {
     String[] modList = mods.getText().split(",");
     var workshopfolder = new File(steamFolder.getText() + "/steamapps/workshop/content/392110");
+    if (modList.length < 2) {
+      var alert = new Alert(Alert.AlertType.ERROR, "To few mods given");
+      alert.show();
+      return;
+    }
+    if (!workshopfolder.isDirectory()) {
+      var alert = new Alert(Alert.AlertType.ERROR, "Invalid Steam directory given");
+      alert.show();
+      return;
+    }
+    if (modName.getText().isBlank()) {
+      var alert = new Alert(Alert.AlertType.ERROR, "No Modname given");
+      alert.show();
+      return;
+    }
     var assets = new HashMap<String, File>();
     var data = new HashMap<String, HashMap<String, String>>();
     for (var mod : modList) {
       load(new File(workshopfolder.toString() + '/' + mod), assets, data);
     }
     write(data, assets);
+    var alert = new Alert(Alert.AlertType.INFORMATION, "Mods merged");
+    alert.show();
   }
 
   private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data)
@@ -68,7 +89,7 @@ public class InitialController {
     for (var file : folder.listFiles()) {
       if (file.isDirectory() && !file.getName().startsWith(".") && !file.getName().equals("Documentation")) {
         collect(file, assets, root);
-      } else if (!file.isDirectory() && !file.getName().endsWith(".xml") && !file.getName().startsWith(".") && !file.getName().equals("PublishedFile.Id")) {
+      } else if (!file.isDirectory() && !file.getName().endsWith(".xml") && !file.getName().endsWith(".properties") && !file.getName().endsWith(".json") && !file.getName().endsWith(".txt") && !file.getName().startsWith(".") && !file.getName().equals("PublishedFile.Id")) {
         assets.put(file.getAbsolutePath().substring(root.getAbsolutePath().length()), file);
       }
     }
@@ -180,7 +201,10 @@ public class InitialController {
     }
     var modFile = new File(target.toString() + "/" + name + ".xml");
     try {
-      FileUtils.copyInputStreamToFile(getClass().getResourceAsStream("Merge.xml"), modFile);
+      var merge = IOUtils.toString(getClass().getResourceAsStream("Merge.xml"));
+      merge = merge.replaceAll("%MergeTitle%", modName.getText());
+      merge = merge.replaceAll("%MergeName%", modName.getText().replaceAll(" ", ""));
+      FileUtils.write(modFile, merge, Charset.defaultCharset());
     } catch (IOException ex) {
           System.err.println(143);
           System.err.println(ex);
