@@ -2,6 +2,7 @@ package de.idrinth.endlessspace2.modmerger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -12,6 +13,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class InitialController {
 
@@ -40,7 +48,7 @@ public class InitialController {
           var mod = doc.getElementsByTagName("RuntimeModule");
           if (mod.getLength() == 1) {
             read(mod.item(0), folder, data);
-            collect(folder, assets);
+            collect(folder, assets, folder);
             return;
           }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
@@ -52,10 +60,6 @@ public class InitialController {
     }
     System.out.println(assets);
   }
-  private void collect(File folder, HashMap<String, File> assets)
-  {
-    collect(folder, assets, folder);
-  }
   private void collect(File folder, HashMap<String, File> assets, File root)
   {
     for (var file : folder.listFiles()) {
@@ -66,16 +70,80 @@ public class InitialController {
       }
     }
   }
+  private void find(File folder, List<File> files, File root)
+  {
+    for (var file : folder.listFiles()) {
+      if (file.isDirectory() && !file.getName().startsWith(".") && !file.getName().equals("Documentation")) {
+        find(file, files, root);
+      } else if (!file.isDirectory() && file.getName().endsWith(".xml")) {
+        files.add(file);
+      }
+    }
+  }
   private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data)
   {
-    //
+    List<File> xmls = new ArrayList<>();
+    find(folder, xmls, folder);
+    for (var i = 0; i < config.getChildNodes().getLength(); i++) {
+      var node = config.getChildNodes().item(i);
+      if (!"Plugins".equals(node.getNodeName())) {
+        continue;
+      }
+      for (var j = 0; j < node.getChildNodes().getLength(); j++) {
+        var plugin = node.getChildNodes().item(j);
+        if ("RegistryPlugin".equals(plugin.getNodeName())) {
+          //the registry has to be merged...
+        } else if ("DatabasePlugin".equals(plugin.getNodeName())) {
+          //these overwrite resources by name
+          var type = plugin.getAttributes().getNamedItem("DataType").getTextContent();
+          type = type.substring(0, type.indexOf(","));
+          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+            var path = plugin.getChildNodes().item(k);
+            if (!path.getNodeName().equals("FilePath")) {
+              continue;
+            }
+            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + folder.getAbsolutePath() + "\\" + path.getTextContent().replace("/", "\\"));
+            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent());
+            for (var file : xmls) {
+              if (/*matcher.matches(file.getAbsoluteFile().toPath()) || */target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString())) {
+                try {
+                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                  if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
+                    for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
+                      var element = doc.getFirstChild().getChildNodes().item(l);
+                      if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
+                        continue;
+                      }
+                      var name = element.getAttributes().getNamedItem("Name").getTextContent();
+                      data.putIfAbsent(type, new HashMap<>());
+                      data.get(type).put(name, nodeToString(element));
+                    }
+                  } else {
+                    System.out.println(doc.getFirstChild().getNodeName());
+                  }
+                } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
+                  System.err.println(96);
+                  System.err.println(ex);
+                  //not parseable, do we care?
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  private static String nodeToString(Node node) throws TransformerException {
+    StringWriter sw = new StringWriter();
+    TransformerFactory.newInstance().newTransformer().transform(new DOMSource(node), new StreamResult(sw));
+    return sw.toString();
   }
   private void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets)
   {
     var name = "Merge" + LocalTime.now().toString();
     name = name.replaceAll(":", "-");
     name = name.replaceAll("\\.", "-");
-    var target = new File("C:/users/Björn/Documents/Endless space 2/Community/" + name);
+    var target = new File("C:/Users/Björn/Documents/Endless space 2/Community/" + name);
     if (!target.isDirectory()) {
       target.mkdirs();
     }
@@ -85,7 +153,7 @@ public class InitialController {
       try {
         FileUtils.copyFile(assets.get(path), out);
       } catch (IOException ex) {
-          System.err.println(87);
+          System.err.println(122);
           System.err.println(ex);
       }
     }
@@ -98,7 +166,7 @@ public class InitialController {
           FileUtils.write(out, item, Charset.defaultCharset(), true);
         }
       } catch (IOException ex) {
-          System.err.println(100);
+          System.err.println(135);
           System.err.println(ex);
       }
     }
@@ -106,7 +174,7 @@ public class InitialController {
     try {
       FileUtils.copyInputStreamToFile(getClass().getResourceAsStream("Merge.xml"), modFile);
     } catch (IOException ex) {
-          System.err.println(107);
+          System.err.println(143);
           System.err.println(ex);
     }
   }
