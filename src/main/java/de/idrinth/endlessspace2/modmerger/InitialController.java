@@ -148,7 +148,7 @@ public class InitialController {
     var name = "Merge" + LocalTime.now().toString();
     name = name.replaceAll(":", "-");
     name = name.replaceAll("\\.", "-");
-    var target = new File("C:/users/Björn/Documents/Endless space 2/Community/" + name);
+    var target = new File(System.getProperty("user.home") + "/Documents/Endless space 2/Community/" + name);
     if (!target.isDirectory()) {
       target.mkdirs();
     }
