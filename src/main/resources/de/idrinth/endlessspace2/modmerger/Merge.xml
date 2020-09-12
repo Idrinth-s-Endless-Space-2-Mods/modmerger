@@ -266,7 +266,7 @@
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HappinessStatusSetDefinition, Assembly-CSharp">
-                <FilePath>source/"HappinessStatusSetDefinition.xml</FilePath>
+                <FilePath>source/HappinessStatusSetDefinition.xml</FilePath>
             </DatabasePlugin>
 
             <DatabasePlugin DataType="HonorThresholdSetDefinition, Assembly-CSharp">
