@@ -53,17 +53,22 @@ public class InitialController {
       alert.show();
       return;
     }
+    var overwrites = new ArrayList<String>();
     var assets = new HashMap<String, File>();
     var data = new HashMap<String, HashMap<String, String>>();
     for (var mod : modList) {
-      load(new File(workshopfolder.toString() + '/' + mod), assets, data);
+      load(new File(workshopfolder.toString() + '/' + mod), assets, data, overwrites);
     }
     write(data, assets);
-    var alert = new Alert(Alert.AlertType.INFORMATION, "Mods merged");
+    var output = "Mods merged";
+    for (var message : overwrites) {
+      output += "\n" + message;
+    }
+    var alert = new Alert(Alert.AlertType.INFORMATION, output);
     alert.show();
   }
 
-  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data)
+  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data, ArrayList<String> overwrites)
   {
     for (var file : folder.listFiles()) {
       if (file.getName().endsWith(".xml")) {
@@ -71,13 +76,11 @@ public class InitialController {
           var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
           var mod = doc.getElementsByTagName("RuntimeModule");
           if (mod.getLength() == 1) {
-            read(mod.item(0), folder, data);
+            read(mod.item(0), folder, data, overwrites);
             collect(folder, assets, folder);
             return;
           }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-          System.err.println(49);
-          System.err.println(ex);
           //not parseable, do we care?
         }
       }
@@ -104,7 +107,7 @@ public class InitialController {
       }
     }
   }
-  private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data)
+  private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data, ArrayList<String> overwrites)
   {
     List<File> xmls = new ArrayList<>();
     find(folder, xmls, folder);
@@ -126,10 +129,10 @@ public class InitialController {
             if (!path.getNodeName().equals("FilePath")) {
               continue;
             }
-            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + folder.getAbsolutePath() + "\\" + path.getTextContent().replace("/", "\\"));
+            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + path.getTextContent());
             var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent());
             for (var file : xmls) {
-              if (/*matcher.matches(file.getAbsoluteFile().toPath()) || */target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString())) {
+              if (target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString()) || matcher.matches(file.getAbsoluteFile().toPath())) {
                 try {
                   var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
                   if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
@@ -140,12 +143,13 @@ public class InitialController {
                       }
                       var name = element.getAttributes().getNamedItem("Name").getTextContent();
                       data.putIfAbsent(type, new HashMap<>());
+                      if (data.get(type).containsKey(name)) {
+                        overwrites.add(name + " of type " + type + " overwritten by mod " + folder.getName());
+                      }
                       data.get(type).put(name, nodeToString(element));
                     }
                   }
                 } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
-                  System.err.println(96);
-                  System.err.println(ex);
                   //not parseable, do we care?
                 }
               }
@@ -179,8 +183,6 @@ public class InitialController {
       try {
         FileUtils.copyFile(assets.get(path), out);
       } catch (IOException ex) {
-          System.err.println(122);
-          System.err.println(ex);
       }
     }
     for (String type : data.keySet()) {
@@ -190,13 +192,10 @@ public class InitialController {
         out.createNewFile();
         FileUtils.write(out, "<Datatable>", Charset.defaultCharset(), true);
         for (String item : data.get(type).values()) {
-          System.out.println(item);
           FileUtils.write(out, item, Charset.defaultCharset(), true);
         }
         FileUtils.write(out, "</Datatable>", Charset.defaultCharset(), true);
       } catch (IOException ex) {
-          System.err.println(135);
-          System.err.println(ex);
       }
     }
     var modFile = new File(target.toString() + "/" + name + ".xml");
@@ -206,8 +205,6 @@ public class InitialController {
       merge = merge.replaceAll("%MergeName%", modName.getText().replaceAll(" ", ""));
       FileUtils.write(modFile, merge, Charset.defaultCharset());
     } catch (IOException ex) {
-          System.err.println(143);
-          System.err.println(ex);
     }
   }
 }
