@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -133,6 +134,12 @@ public class InitialController {
       registry.put(path, node.getTextContent());
     }
   }
+  private boolean matches(File file, File root, PathMatcher glob)
+  {
+    var min = root.getAbsoluteFile().toPath().getNameCount();
+    var max = file.getAbsoluteFile().toPath().getNameCount();
+    return glob.matches(file.getAbsoluteFile().toPath().subpath(min, max));
+  }
   private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data, HashMap<String, String> registry)
   {
     List<File> xmls = new ArrayList<>();
@@ -151,10 +158,11 @@ public class InitialController {
             if (!path.getNodeName().equals("FilePath")) {
               continue;
             }
-            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + path.getTextContent());
-            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent());
+            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
+            var matcher = FileSystems.getDefault().getPathMatcher(glob);
+            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
             for (var file : xmls) {
-              if (target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString()) || matcher.matches(file.getAbsoluteFile().toPath())) {
+              if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
                 try {
                   var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
                   merge(doc, registry, "", folder);
@@ -173,10 +181,11 @@ public class InitialController {
             if (!path.getNodeName().equals("FilePath")) {
               continue;
             }
-            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + path.getTextContent());
-            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent());
+            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
+            var matcher = FileSystems.getDefault().getPathMatcher(glob);
+            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
             for (var file : xmls) {
-              if (target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString()) || matcher.matches(file.getAbsoluteFile().toPath())) {
+              if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
                 try {
                   var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
                   if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
