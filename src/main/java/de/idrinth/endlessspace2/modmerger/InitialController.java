@@ -63,7 +63,7 @@ public class InitialController {
     }
     log.setText("");
     var assets = new HashMap<String, File>();
-    var data = new HashMap<String, HashMap<String, String>>();
+    var data = new HashMap<String, HashMap<String, Node>>();
     var registry = new HashMap<String, String>();
     
     for (var mod : modList) {
@@ -78,7 +78,7 @@ public class InitialController {
     log.appendText(message + "\n");
   }
 
-  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data, HashMap<String, String> registry)
+  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, Node>> data, HashMap<String, String> registry)
   {
     for (var file : folder.listFiles()) {
       if (file.getName().endsWith(".xml")) {
@@ -124,7 +124,7 @@ public class InitialController {
     var max = file.getAbsoluteFile().toPath().getNameCount();
     return glob.matches(file.getAbsoluteFile().toPath().subpath(min, max));
   }
-  private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data, HashMap<String, String> registry)
+  private void read(Node config, File folder, HashMap<String, HashMap<String, Node>> data, HashMap<String, String> registry)
   {
     for (var i = 0; i < config.getChildNodes().getLength(); i++) {
       var node = config.getChildNodes().item(i);
@@ -182,10 +182,10 @@ public class InitialController {
                         writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
                       }
                       element.normalize();
-                      data.get(type).put(name, nodeToString(element, true));
+                      data.get(type).put(name, element);
                     }
                   }
-                } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
+                } catch (ParserConfigurationException | SAXException | IOException ex) {
                   //not parseable, do we care?
                 }
               }

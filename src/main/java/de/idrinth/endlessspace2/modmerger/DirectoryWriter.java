@@ -34,7 +34,7 @@ public class DirectoryWriter {
 
     return sw.toString();
   }
-  public void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets, HashMap<String, String> registry, String[] modList, String modName)
+  public void write(HashMap<String, HashMap<String, Node>> data, HashMap<String, File> assets, HashMap<String, String> registry, String[] modList, String modName)
   {
     var target = buildModDir(modName);
     copyAssets(target, assets);
@@ -54,7 +54,7 @@ public class DirectoryWriter {
     }
     return target;
   }
-  private void writeXmls(File target, HashMap<String, HashMap<String, String>> data)
+  private void writeXmls(File target, HashMap<String, HashMap<String, Node>> data)
   {
     for (String type : data.keySet()) {
       System.out.println(type);
@@ -63,11 +63,11 @@ public class DirectoryWriter {
       try {
         out.createNewFile();
         FileUtils.write(out, "<Datatable>", Charset.defaultCharset(), true);
-        for (String item : data.get(type).values()) {
-          FileUtils.write(out, item, Charset.defaultCharset(), true);
+        for (var item : data.get(type).values()) {
+          FileUtils.write(out, nodeToString(item, true), Charset.defaultCharset(), true);
         }
         FileUtils.write(out, "</Datatable>", Charset.defaultCharset(), true);
-      } catch (IOException ex) {
+      } catch (IOException | TransformerException ex) {
       }
     }
   }
