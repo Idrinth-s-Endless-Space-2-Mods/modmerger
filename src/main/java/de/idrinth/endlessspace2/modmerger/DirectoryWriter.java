@@ -38,7 +38,6 @@ public class DirectoryWriter {
   {
     var target = buildModDir(modName);
     copyAssets(target, assets);
-    System.out.println(data.size());
     writeXmls(target, data);
     writeRegistry(target, registry);
     writeModFile(target, modList, modName);
@@ -57,7 +56,6 @@ public class DirectoryWriter {
   private void writeXmls(File target, HashMap<String, HashMap<String, Node>> data)
   {
     for (String type : data.keySet()) {
-      System.out.println(type);
       var out = new File(target.toString() + "/source/" + type + ".xml");
       out.getParentFile().mkdirs();
       try {

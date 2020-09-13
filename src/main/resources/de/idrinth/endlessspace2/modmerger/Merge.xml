@@ -1269,6 +1269,12 @@
             <RegistryPlugin>
                 <FilePath>source/Registry.xml</FilePath>
             </RegistryPlugin>
+            
+            <!-- Localization -->
+
+            <LocalizationPlugin DefaultLanguage="english">
+                <Directory>Localization</Directory>
+            </LocalizationPlugin>
         </Plugins>
     </RuntimeModule>
 </Datatable>

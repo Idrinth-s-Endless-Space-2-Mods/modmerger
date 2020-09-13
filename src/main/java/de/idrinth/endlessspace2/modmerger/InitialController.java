@@ -3,21 +3,15 @@ package de.idrinth.endlessspace2.modmerger;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.time.LocalTime;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javax.xml.transform.OutputKeys;
@@ -26,8 +20,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.apache.commons.io.IOUtils;
-import org.w3c.dom.Document;
 
 public class InitialController {
 
@@ -191,19 +183,43 @@ public class InitialController {
               }
             }
           }
+        } else if ("LocalizationPlugin".equals(plugin.getNodeName())) {
+          //these overwrite resources by name
+          var type = "../Localization/english/E2_Localization_Locales";
+          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+            var path = plugin.getChildNodes().item(k);
+            if (!path.getNodeName().equals("Directory")) {
+              continue;
+            }
+            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]") + "/english/*.xml";
+            var matcher = FileSystems.getDefault().getPathMatcher(glob);
+            for (var file : dir.xmls().values()) {
+              if (matches(file, folder, matcher)) {
+                try {
+                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                  if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
+                    for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
+                      var element = doc.getFirstChild().getChildNodes().item(l);
+                      if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
+                        continue;
+                      }
+                      var name = element.getAttributes().getNamedItem("Name").getTextContent();
+                      data.putIfAbsent(type, new HashMap<>());
+                      if (data.get(type).containsKey(name)) {
+                        writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
+                      }
+                      element.normalize();
+                      data.get(type).put(name, element);
+                    }
+                  }
+                } catch (ParserConfigurationException | SAXException | IOException ex) {
+                  //not parseable, do we care?
+                }
+              }
+            }
+          }
         }
       }
     }
-  }
-  private String nodeToString(Node node, boolean noDeclaration) throws TransformerException {
-    StringWriter sw = new StringWriter();
-
-    Transformer t = TransformerFactory.newInstance().newTransformer();
-    if (noDeclaration) {
-      t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-    }
-    t.transform(new DOMSource(node), new StreamResult(sw));
-
-    return sw.toString();
   }
 }
