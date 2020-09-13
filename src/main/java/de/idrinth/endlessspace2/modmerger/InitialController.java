@@ -15,8 +15,10 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -24,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Document;
 
 public class InitialController {
 
@@ -33,6 +36,8 @@ public class InitialController {
   private TextField mods;
   @FXML
   private TextField modName;
+  @FXML
+  private TextArea log;
 
   @FXML
   private void start() {
@@ -53,22 +58,23 @@ public class InitialController {
       alert.show();
       return;
     }
-    var overwrites = new ArrayList<String>();
+    log.setText("");
     var assets = new HashMap<String, File>();
     var data = new HashMap<String, HashMap<String, String>>();
+    var registry = new HashMap<String, String>();
     for (var mod : modList) {
-      load(new File(workshopfolder.toString() + '/' + mod), assets, data, overwrites);
+      load(new File(workshopfolder.toString() + '/' + mod), assets, data, registry);
     }
-    write(data, assets);
-    var output = "Mods merged";
-    for (var message : overwrites) {
-      output += "\n" + message;
-    }
-    var alert = new Alert(Alert.AlertType.INFORMATION, output);
+    write(data, assets, registry, modList);
+    var alert = new Alert(Alert.AlertType.INFORMATION, "Mods merged");
     alert.show();
   }
+  private void writeLog(String message)
+  {
+    log.appendText(message + "\n");
+  }
 
-  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data, ArrayList<String> overwrites)
+  private void load(File folder, HashMap<String, File> assets, HashMap<String, HashMap<String, String>> data, HashMap<String, String> registry)
   {
     for (var file : folder.listFiles()) {
       if (file.getName().endsWith(".xml")) {
@@ -76,7 +82,7 @@ public class InitialController {
           var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
           var mod = doc.getElementsByTagName("RuntimeModule");
           if (mod.getLength() == 1) {
-            read(mod.item(0), folder, data, overwrites);
+            read(mod.item(0), folder, data, registry);
             collect(folder, assets, folder);
             return;
           }
@@ -85,7 +91,6 @@ public class InitialController {
         }
       }
     }
-    System.out.println(assets);
   }
   private void collect(File folder, HashMap<String, File> assets, File root)
   {
@@ -107,7 +112,28 @@ public class InitialController {
       }
     }
   }
-  private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data, ArrayList<String> overwrites)
+  private void merge(Node node, HashMap<String, String> registry, String path, File folder)
+  {
+    if (node.hasChildNodes()) {
+      if (!"#document".equals(node.getNodeName())) {
+        path = path +"/"+ node.getNodeName();
+        if (path.startsWith("/")) {
+          path=path.substring(1);
+        }
+      }
+      for (var i=0; i<node.getChildNodes().getLength(); i++) {
+        merge(node.getChildNodes().item(i), registry, path, folder);
+      }
+      return;
+    }
+    if ("#text".equals(node.getNodeName()) && !node.getTextContent().isBlank()) {
+      if (registry.containsKey(path) && !registry.get(path).equals(node.getTextContent())) {
+        writeLog(path + " is overwritten by mod " + folder.getName());
+      }
+      registry.put(path, node.getTextContent());
+    }
+  }
+  private void read(Node config, File folder, HashMap<String, HashMap<String, String>> data, HashMap<String, String> registry)
   {
     List<File> xmls = new ArrayList<>();
     find(folder, xmls, folder);
@@ -120,6 +146,24 @@ public class InitialController {
         var plugin = node.getChildNodes().item(j);
         if ("RegistryPlugin".equals(plugin.getNodeName())) {
           //the registry has to be merged...
+          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+            var path = plugin.getChildNodes().item(k);
+            if (!path.getNodeName().equals("FilePath")) {
+              continue;
+            }
+            var matcher = FileSystems.getDefault().getPathMatcher("glob:" + path.getTextContent());
+            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent());
+            for (var file : xmls) {
+              if (target.getAbsoluteFile().toString().equals(file.getAbsoluteFile().toString()) || matcher.matches(file.getAbsoluteFile().toPath())) {
+                try {
+                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                  merge(doc, registry, "", folder);
+                } catch (ParserConfigurationException | SAXException | IOException ex) {
+                  //not parseable, do we care?
+                }
+              }
+            }
+          }
         } else if ("DatabasePlugin".equals(plugin.getNodeName())) {
           //these overwrite resources by name
           var type = plugin.getAttributes().getNamedItem("DataType").getTextContent();
@@ -144,9 +188,9 @@ public class InitialController {
                       var name = element.getAttributes().getNamedItem("Name").getTextContent();
                       data.putIfAbsent(type, new HashMap<>());
                       if (data.get(type).containsKey(name)) {
-                        overwrites.add(name + " of type " + type + " overwritten by mod " + folder.getName());
+                        writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
                       }
-                      data.get(type).put(name, nodeToString(element));
+                      data.get(type).put(name, nodeToString(element, true));
                     }
                   }
                 } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
@@ -159,16 +203,18 @@ public class InitialController {
       }
     }
   }
-  private static String nodeToString(Node node) throws TransformerException {
+  private static String nodeToString(Node node, boolean noDeclaration) throws TransformerException {
     StringWriter sw = new StringWriter();
 
     Transformer t = TransformerFactory.newInstance().newTransformer();
-    t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+    if (noDeclaration) {
+      t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+    }
     t.transform(new DOMSource(node), new StreamResult(sw));
 
     return sw.toString();
   }
-  private void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets)
+  private void write(HashMap<String, HashMap<String, String>> data, HashMap<String, File> assets, HashMap<String, String> registry, String[] modList)
   {
     var name = "Merge" + LocalTime.now().toString();
     name = name.replaceAll(":", "-");
@@ -198,13 +244,50 @@ public class InitialController {
       } catch (IOException ex) {
       }
     }
+    if (!registry.isEmpty()) {
+      try {
+        var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        for (var path : registry.keySet()) {
+          var list = new ArrayList<String>();
+          list.addAll(Arrays.asList(path.split("/")));
+          buildDom(doc, list, registry.get(path));
+        }
+        FileUtils.write(new File(target.toString()+"/source/Registry.xml"), nodeToString(doc, false), Charset.defaultCharset());
+      } catch (TransformerException | IOException | ParserConfigurationException ex) {
+      }
+    }
     var modFile = new File(target.toString() + "/" + name + ".xml");
     try {
       var merge = IOUtils.toString(getClass().getResourceAsStream("Merge.xml"));
       merge = merge.replaceAll("%MergeTitle%", modName.getText());
       merge = merge.replaceAll("%MergeName%", modName.getText().replaceAll(" ", ""));
+      var description = "";
+      for (var mod : modList) {
+        description += ";w:/"+mod;
+      }
+      merge = merge.replaceAll("%MergeDescription%", description.substring(1));
       FileUtils.write(modFile, merge, Charset.defaultCharset());
     } catch (IOException ex) {
     }
+  }
+
+  private void buildDom(Document doc, ArrayList<String> path, String value) {
+    Node local = doc;
+    for (var part : path) {
+      var found = false;
+      for(var i=0;i<local.getChildNodes().getLength();i++) {
+        var loc = local.getChildNodes().item(i);
+        if (part.equals(loc.getNodeName())) {
+          local = loc;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        local.appendChild(doc.createElement(part));
+        local = local.getChildNodes().item(local.getChildNodes().getLength()-1);
+      }
+    }
+    local.setTextContent(value);
   }
 }

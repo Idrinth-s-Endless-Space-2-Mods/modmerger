@@ -2,13 +2,13 @@
 <Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:noNamespaceSchemaLocation="../../../source/Schemas/Amplitude.Unity.Runtime.RuntimeModule.xsd">
     <RuntimeModule Name="%MergeName%" Type="Extension">
         <Title>%MergeTitle%</Title>
-        <Description>Default module. Could be localized...</Description>
+        <Description>%MergeDescription%</Description>
         <Plugins>
             <!-- REGISTRIES -->
 
-            <!--<RegistryPlugin>
+            <RegistryPlugin>
                 <FilePath>source/Registry.xml</FilePath>
-            </RegistryPlugin>-->
+            </RegistryPlugin>
 
             <!-- GALAXY GENERATOR -->
 

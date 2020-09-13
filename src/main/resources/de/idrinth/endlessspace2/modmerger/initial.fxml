@@ -33,6 +33,7 @@
                       </VBox>
                     </children>
                 </HBox>
+                <TextArea fx:id="log"/>
             </children>
         </VBox>
     </children>
