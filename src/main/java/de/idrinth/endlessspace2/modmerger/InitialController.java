@@ -105,7 +105,7 @@ public class InitialController {
     }
     if ("#text".equals(node.getNodeName()) && !node.getTextContent().isBlank()) {
       if (registry.containsKey(path) && !registry.get(path).equals(node.getTextContent())) {
-        writeLog(path + " is overwritten by mod " + folder.getName());
+        writeLog(path + " in Registry is overwritten by mod " + folder.getName());
       }
       registry.put(path, node.getTextContent());
     }
@@ -125,99 +125,105 @@ public class InitialController {
       }
       for (var j = 0; j < node.getChildNodes().getLength(); j++) {
         var plugin = node.getChildNodes().item(j);
-        if ("RegistryPlugin".equals(plugin.getNodeName())) {
-          //the registry has to be merged...
-          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
-            var path = plugin.getChildNodes().item(k);
-            if (!path.getNodeName().equals("FilePath")) {
-              continue;
-            }
-            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
-            var matcher = FileSystems.getDefault().getPathMatcher(glob);
-            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
-            for (var file : dir.xmls().values()) {
-              if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
-                try {
-                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
-                  merge(doc, registry, "", folder);
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                  //not parseable, do we care?
-                }
+        if (null != plugin.getNodeName()) switch (plugin.getNodeName()) {
+          case "RegistryPlugin":
+            //the registry has to be merged...
+            for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+              var path = plugin.getChildNodes().item(k);
+              if (!path.getNodeName().equals("FilePath")) {
+                continue;
               }
-            }
-          }
-        } else if ("DatabasePlugin".equals(plugin.getNodeName())) {
-          //these overwrite resources by name
-          var type = plugin.getAttributes().getNamedItem("DataType").getTextContent();
-          type = type.substring(0, type.indexOf(","));
-          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
-            var path = plugin.getChildNodes().item(k);
-            if (!path.getNodeName().equals("FilePath")) {
-              continue;
-            }
-            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
-            var matcher = FileSystems.getDefault().getPathMatcher(glob);
-            var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
-            for (var file : dir.xmls().values()) {
-              if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
-                try {
-                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
-                  if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
-                    for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
-                      var element = doc.getFirstChild().getChildNodes().item(l);
-                      if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
-                        continue;
-                      }
-                      var name = element.getAttributes().getNamedItem("Name").getTextContent();
-                      data.putIfAbsent(type, new HashMap<>());
-                      if (data.get(type).containsKey(name)) {
-                        writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
-                      }
-                      element.normalize();
-                      data.get(type).put(name, element);
-                    }
+              var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
+              var matcher = FileSystems.getDefault().getPathMatcher(glob);
+              var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
+              for (var file : dir.xmls().values()) {
+                if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
+                  try {
+                    var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                    doc.normalizeDocument();
+                    merge(doc, registry, "", folder);
+                  } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    //not parseable, do we care?
                   }
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                  //not parseable, do we care?
                 }
               }
-            }
-          }
-        } else if ("LocalizationPlugin".equals(plugin.getNodeName())) {
-          //these overwrite resources by name
-          var type = "../Localization/english/E2_Localization_Locales";
-          for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
-            var path = plugin.getChildNodes().item(k);
-            if (!path.getNodeName().equals("Directory")) {
-              continue;
-            }
-            var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]") + "/english/*.xml";
-            var matcher = FileSystems.getDefault().getPathMatcher(glob);
-            for (var file : dir.xmls().values()) {
-              if (matches(file, folder, matcher)) {
-                try {
-                  var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
-                  if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
-                    for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
-                      var element = doc.getFirstChild().getChildNodes().item(l);
-                      if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
-                        continue;
+            } break;
+          case "DatabasePlugin":{
+            //these overwrite resources by name
+            var type = plugin.getAttributes().getNamedItem("DataType").getTextContent();
+            type = type.substring(0, type.indexOf(","));
+            for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+              var path = plugin.getChildNodes().item(k);
+              if (!path.getNodeName().equals("FilePath")) {
+                continue;
+              }
+              var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
+              var matcher = FileSystems.getDefault().getPathMatcher(glob);
+              var target = new File(folder.getAbsolutePath() + "/" + path.getTextContent()).getAbsoluteFile();
+              for (var file : dir.xmls().values()) {
+                if (target.toString().equals(file.getAbsoluteFile().toString()) || matches(file, folder, matcher)) {
+                  try {
+                    var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                    if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
+                      for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
+                        var element = doc.getFirstChild().getChildNodes().item(l);
+                        if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
+                          continue;
+                        }
+                        var name = element.getAttributes().getNamedItem("Name").getTextContent();
+                        data.putIfAbsent(type, new HashMap<>());
+                        if (data.get(type).containsKey(name)) {
+                          writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
+                        }
+                        element.normalize();
+                        data.get(type).put(name, element);
                       }
-                      var name = element.getAttributes().getNamedItem("Name").getTextContent();
-                      data.putIfAbsent(type, new HashMap<>());
-                      if (data.get(type).containsKey(name)) {
-                        writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
-                      }
-                      element.normalize();
-                      data.get(type).put(name, element);
                     }
+                  } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    //not parseable, do we care?
                   }
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                  //not parseable, do we care?
                 }
               }
+            }   break;
             }
-          }
+          case "LocalizationPlugin":{
+            //these overwrite resources by name
+            var type = "../Localization/english/E2_Localization_Locales";
+            for (var k=0; k < plugin.getChildNodes().getLength(); k++) {
+              var path = plugin.getChildNodes().item(k);
+              if (!path.getNodeName().equals("Directory")) {
+                continue;
+              }
+              var glob = "glob:" + path.getTextContent().replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]") + "/english/*.xml";
+              var matcher = FileSystems.getDefault().getPathMatcher(glob);
+              for (var file : dir.xmls().values()) {
+                if (matches(file, folder, matcher)) {
+                  try {
+                    var doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+                    if ("Datatable".equals(doc.getFirstChild().getNodeName())) {
+                      for (var l = 0; l<doc.getFirstChild().getChildNodes().getLength(); l++) {
+                        var element = doc.getFirstChild().getChildNodes().item(l);
+                        if (element.getAttributes() == null || element.getAttributes().getNamedItem("Name") == null) {
+                          continue;
+                        }
+                        var name = element.getAttributes().getNamedItem("Name").getTextContent();
+                        data.putIfAbsent(type, new HashMap<>());
+                        if (data.get(type).containsKey(name)) {
+                          writeLog(name + " of type " + type + " overwritten by mod " + folder.getName());
+                        }
+                        element.normalize();
+                        data.get(type).put(name, element);
+                      }
+                    }
+                  } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    //not parseable, do we care?
+                  }
+                }
+              }
+            }   break;
+            }
+          default:
+            break;
         }
       }
     }

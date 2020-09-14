@@ -98,7 +98,7 @@ public class DirectoryWriter {
   }
   private void writeRegistry(File target, HashMap<String, String> registry)
   {
-    if (!registry.isEmpty()) {
+    if (registry.isEmpty()) {
       return;
     }
     try {
